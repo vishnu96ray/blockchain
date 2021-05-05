@@ -1,0 +1,150 @@
+{% extends 'accounts/base.html'%}
+{% load static %}
+{% block main %}
+	<div class="container mt-5">
+		<div style="padding: 10px; box-shadow: 5px 10px 18px #888888; margin-bottom: 20px; border-radius: 4px; background:#e8eaf6;">
+			<h2 class="mt-1 mb-2">Register</h2>
+			<form method="post" id="signup-form">
+				{% csrf_token %}
+<!-- 				<div class="col-md-12 center">
+              <div class="alert alert-success alert-dismissable hidden" role="alert">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;
+                </button> 
+                  <i class="fa fa-2x fa-rocket">
+                  </i>Thank You! You have been successfully registerd with us.Please login and start using our services.
+              </div>
+              <div class="alert alert-danger alert-dismissable hidden" role="alert">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;</button>
+                  <i class="fa fa-2x fa-rocket"></i>Below mentioned Pan, Mobile and email is not available, Please try from different one.
+              </div>
+            </div> -->
+				<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="applicant">Applicant<span>*</span></label>
+				      <input type="text" class="form-control" name="applicant" id="applicant" placeholder="Applicant" required="">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="sodowo">So/Do/Wo<span>*</span></label>
+				      <input type="text" class="form-control" name="sodowo" id="sodowo" placeholder="So/Do/Wo" required="">
+				    </div>
+				    <div class="form-group col-md-4">
+				      <label for="gender">Gender<span>*</span></label>
+				      <select id="gender" name="gender" class="form-control">
+				        <option selected>Choose...</option>
+				        <option>Male</option>
+				        <option>Female</option>
+				        <option>Other</option>
+				      </select>
+				    </div>
+				    <div class="form-group col-md-4">
+				      <label for="email">Email<span>*</span></label>
+				      <input type="email" class="form-control" name="email" id="email" placeholder="Email" required="">
+				    </div>
+				    <div class="form-group col-md-4">
+				      <label for="mobile">Mobile<span>*</span></label>
+				      <input type="number" class="form-control" name="mobile" id="mobile" placeholder="Mobile" required="">
+				    </div>
+				    
+				</div>
+				<div class="form-row">
+				    <div class="form-group col-md-3">
+				      <label for="dob">Date of Birth<span>*</span></label>
+				      <input type="date" class="form-control" name="dob" id="dob" placeholder="Date of birth" required="">
+				    </div>
+				    <div class="form-group col-md-3">
+				      <label for="age">Age<span>*</span></label>
+				      <input type="age" class="form-control" name="age" id="age" placeholder="Age" required="">
+				    </div>
+				    <div class="form-group col-md-3">
+				      <label for="pan">PAN<span>*</span></label>
+				      <input type="text" class="form-control" name="pan" id="pan" placeholder="PAN" maxlength="10" minlength="10" required="">
+				    </div>
+				    <div class="form-group col-md-3">
+				      <label for="joining_amt">Joining Amount<span>*</span></label>
+				      <input type="number" class="form-control" name="joining_amt" id="joining_amt" placeholder="Joining Amount" required="">
+				</div>
+				    
+				</div>
+
+				<div class="form-row">
+				    <div class="form-group col-md-3">
+				      <label for="district">District<span>*</span></label>
+				      <input type="text" class="form-control" name="district" id="district" placeholder="District" required="">
+				    </div>
+				    <div class="form-group col-md-3">
+				      <label for="city">City<span>*</span></label>
+				      <input type="text" class="form-control" name="city" id="city" placeholder="city" required="">
+				    </div>
+				    
+				    <div class="form-group col-md-3">
+				      <label for="state">State<span>*</span></label>
+				      <select id="state" name="state" class="form-control" required="">
+				        <option selected>Choose...</option>
+				        <option>Delhi</option>
+				      </select>
+				    </div>
+				    <div class="form-group col-md-3">
+				      <label for="pincode">Pincode<span>*</span></label>
+				      <input type="number" class="form-control" name="pincode" id="pincode" placeholder="Pincode" required="">
+				    </div>
+				</div>
+				  
+				<div class="form-group">
+				    <label for="address">Address</label>
+				    <input type="text" class="form-control" name="address" id="address" placeholder="Address">
+				</div>
+
+				<h3>Sponsor Detail</h3>
+				<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="sponsor_name">Sponsor Name*</label>
+				      <input type="text" class="form-control" name="sponsor_name" id="sponsor_name" placeholder="Sponsor Name">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="sponsor_mobile">Sponsor Mobile*</label>
+				      <input type="number" class="form-control" name="sponsor_mobile" id="sponsor_mobile" placeholder="Sponsor Mobile">
+				    </div>
+				    <div class="form-group col-md-6 bg-light">
+		                <lable>Do you have Referral Code? (Sponsor ID)<span class="star">*</span></lable>
+		                <br>
+		                Yes&nbsp;<input type="radio" name="referral_id" id="yes">
+		                No&nbsp;<input type="radio" name="referral_id" id="no"> 
+		            </div>
+		            <div class="form-group col-md-6" id="divshow">
+		        	</div>
+					<!-- 
+				    <div class="form-group col-md-6" style="display: none;">
+				      <label for="referral_code">Referral Code</label>
+				      <input type="text" class="form-control" name="referral_code" id="referral_code" placeholder="Referral Code">
+				    </div> -->
+				</div>
+
+			  <button type="submit" class="btn btn-success btn-block" id="userregister" style="font-weight: bold;">Register</button>
+			  Have a account ? <a href="/accounts/signin/">Login</a>
+			</form>
+		</div>
+	</div>
+
+	{% block extrajs %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script >
+		 // refferal code input field visible and invisible    
+        $(document).ready(function(){
+            //var headerHeight = $('.ddd').outerHeight();
+            
+          $("#yes").click(function(){
+
+            //$("#referral_id").show();
+            $("#divshow").html('<div class="form-group" id="referral_id"><label>Referral Code</label><input type="text" name="referral_code"  class="form-control"></div>'); 
+          
+          });
+          $("#no").click(function(){
+            //$("#referral_id").hide();
+            $("#divshow").html('<input type="hidden" value="SabziCartB2C042021" name="referral_code"  class="form-control">');
+            //alert(sabzicart_id);
+          });
+        });
+    </script>
+
+	{% endblock %}
+{% endblock %}

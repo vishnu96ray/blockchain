@@ -1,0 +1,40 @@
+{% extends 'accounts/base.html'%}
+{% load static %}
+{% block main %}
+	<div class="container mt-5" style="margin-bottom:150px;">
+		<div style="padding: 10px; box-shadow: 5px 10px 18px #888888; margin-bottom: 20px; border-radius: 4px;">
+			
+		
+				<!-- 		<div class="col-md-6 block light text-center wow fadeInRightBig animated" data-wow-duration="500ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInRightBig;"> -->
+	      	<!-- <div class="center"> -->	      
+	        <h2 class="mt-1 mb-2">SignIn</h2>
+			<form method="post" id="new-login-form" name="new-login-form" action="/accounts/signin/">
+				{% csrf_token %}
+				 <div class="col-md-12 center">
+	                 {% if request.GET.msg %}       
+	                    <div class="alert alert-danger alert-dismissable" role="alert">
+	                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;</button>
+	                    	<i class="fa fa-2x fa-rocket"></i></i>{{ request.GET.msg }}
+	                    </div>
+				 	 {% endif %}
+		            </div>
+				<div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="username">Username</label>
+				      <input type="text" class="form-control" name="username" id="" placeholder="Username" required="">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="password">Password</label>
+				      <input type="password" class="form-control" name="password" id="" placeholder="Password" required="">
+				    </div>
+				</div>    
+
+			  <button type="submit" class="btn btn-success" id="newloginbutton">Login</button>
+			</form>
+			<p class="form-group col-md-12">Don't have sabzicart B2C account? 
+					<a href="/accounts/register/user/">SignUp Now</a> | <a href="accounts/forgot/password/">Forgot</a> My Password </p>
+			<!-- </div> -->
+	    	<!-- </div> -->
+	    </div>			
+	</div>
+{% endblock %}

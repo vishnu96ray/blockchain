@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% block main %}
+<!-- Contact Us -->
+<section class="info-section" id="contact">
+  <div class="row">
+    <div class="col-md-12 block text-center wow fadeInLeftBig animated" data-wow-duration="500ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInLeftBig;">
+      <br>
+      <div class="center">
+        <p class="title"><h3>Coupon Code & Offers</h3></p>
+      </div>
+      <br>
+      <br>
+      <div class="table-responsive">
+      <table class="table"> 
+      <thead> 
+      <tr> 
+          <th class="align-middle" scope="col">Coupon Code</th> 
+          <th class="text-center align-middle" scope="col">Discount</th> 
+          <th  class="text-center align-middle" scope="col"> Products </th>
+          <th  class="text-center align-middle" scope="col"> Plan </th> '
+          <th  class="text-center align-middle" scope="col"> Conditions </th> 
+          
+      </tr> 
+      </thead> 
+      <tbody>  
+      <tr class="big active"> 
+      <td class="text-left">Not Required </td> <td class="text-center">  {{ discount_6_mon }}%  </td> <td class="text-center">  All </td><td class="text-center">  All </td> <td class="text-center">Prepay for<br>6 Months </td>
+      </tr>       
+      <tr class="big"> 
+      <td class="text-left">Not Required </td> <td class="text-center">  {{ discount_12_mon }}%  </td> <td class="text-center">  All </td><td class="text-center">  All </td> <td class="text-center">Prepay for<br>12 Months </td>
+      </tr>
+      {% for c in coupons %}
+      <tr class="big {% cycle 'active' '' %}"> 
+      <td class="text-left">{{ c.coupon_code }} </td> <td class="text-center">  {{ c.discount }}%  </td> <td class="text-center"> {% if c.coupon_type == "1"  %}  All {% else %} {{ c.plan_or_category.get_plan_type_display }}{% endif %} </td><td class="text-center">  {% if c.coupon_type == "1" or c.coupon_type == "3" %}  All {% else  %} {{ c.plan_or_category.name }}{% endif %} </td> <td class="text-center"> {{ c.get_condition_display }}  </td>
+      </tr>
+      {% endfor %}
+</tbody> 
+</table>
+</div>
+    </div>
+</div>
+</section>
+{% endblock %}

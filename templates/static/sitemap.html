@@ -1,0 +1,114 @@
+{% extends "index.html" %}
+{% block main %}
+<!-- Contact Us -->
+<section class="info-section" id="contact">
+
+     <div class="row">
+         <div class="col-md-12 block wow fadeInLeftBig animated" data-wow-duration="500ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInLeftBig;">
+      
+
+<div class="center text-center">
+          <br>
+          <br>
+          <p class="title"><b>Our Free Services </b>
+          <br>
+          <br>
+      </div>
+             <div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/free-email-verifier/" class="btn-link"> Free Email Verifier</a>
+    </div>  
+    </div>
+             <div class="center text-center">
+          <br>
+          <br>
+          <p class="title"><b>Browse Documentation Pages </b>
+          <br>
+          <br>
+      </div>
+
+
+             <div class="row">
+
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/docs/" class="btn-link"> Documentation Home</a>
+    </div>
+         <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/docs/contacts/" class="btn-link">Contacts Docs</a>
+    </div>
+                 <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/docs/api/" class="btn-link">RealTime Api Docs</a>
+    </div>
+ <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/docs/api/file-transfer/" class="btn-link">File Transfer Api Docs</a>
+    </div>
+             </div>
+
+             <div class="center text-center">
+          <br>
+          <br>
+          <p class="title"><b>Browse Comparision Pages </b>
+          <br>
+          <br>
+      </div>
+             <div class="row">
+    {% for b in brand %}
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="/{{ b.url}}/" class="btn-link"> EmailValidator VS {{ b.name }}</a>
+    </div>
+                 {% endfor %}
+
+             </div>
+             
+             <div class="center text-center">
+          <br>
+          <br>
+          <p class="title"><b>Browse Pages </b>
+          <br>
+          <br>
+      </div>
+             <div class="row">
+
+
+    <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/" class="btn-link">Home </a>
+    </div>
+         <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/about-us" class="btn-link">About Us</a>
+    </div>
+          <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/privacy" class="btn-link">Privacy Policy</a>
+    </div>
+ <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/terms" class="btn-link">Terms & Conditions</a>
+    </div>
+         <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/data-processing-agreement" class="btn-link">Data Protection Policy</a>
+    </div>
+   <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/#contact" class="btn-link">Contact Us</a>
+
+   </div>
+                 <div class="col-md-3 col-sm-4 col-xs-6">
+      <a href="/accounts/signin/" class="btn-link">Login</a>
+
+   </div>
+                 <div class="col-lg-3 col-sm-4 col-xs-6">
+      <a href="/accounts/register/user/" class="btn-link">SignUP</a>
+
+   </div>
+             </div>
+
+
+
+</div>
+     </div>
+
+
+
+
+</section>
+{% endblock %}
