@@ -13,3 +13,5 @@ sqlparse==0.4.1
 twilio==6.57.0
 typing-extensions==3.10.0.0
 urllib3==1.26.4
+waitress==2.0.0
+whitenoise==5.2.0
