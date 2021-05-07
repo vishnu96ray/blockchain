@@ -27,24 +27,22 @@ $("#userregister").click(function(){
                         }
                     },
                     submitHandler: function (form) {
-                    $('#userregister').attr('disabled', 'disabled').html('Please Wait ...');
+
+                        $('#userregister').attr('disabled', 'disabled').html('Please Wait ...');
                         $.ajax({
                            type: "POST",
                            url: "/accounts/register/user/",
                            data: $("#signup-form").serialize(), // serializes the form's elements.
-                           success: function(data)
-                           {
-                               if (data == 1)
-                               {
+                           success: function(data) {
+                               if (data == 1) {
                                    $('.alert-success').removeClass('hidden');
                                    $('.alert-info').addClass('hidden');                                   
                                    $('.form-control').val("");
-				   setTimeout(function(){
-			              document.location="/business/";
-					}, 5000);
+				                   setTimeout(function(){
+			                            document.location="/insite/";
+					                }, 5000);
                                }
-                               if (data == 2)
-                               {
+                               if (data == 2) {
                                    $('.alert-info').removeClass('hidden');
                                    $('.alert-success').addClass('hidden');
 
