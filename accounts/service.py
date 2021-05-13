@@ -2,7 +2,7 @@ import requests
 import json
 import random
 import datetime
-from twilio.rest import Client
+# from twilio.rest import Client
 
 
 def referral():
@@ -19,15 +19,32 @@ def usesrpass():
     return u    
 
 	
-account_sid = 'ACdcf64a7c9a50f5be4a56754c02238076'
-auth_token = '4c0abbe370cf9bc84b2c4d4db94102b6'
-def userauthsend(mobile,user,username,password):
+# account_sid = 'ACdcf64a7c9a50f5be4a56754c02238076'
+# auth_token = '4c0abbe370cf9bc84b2c4d4db94102b6'
+# def userauthsend(mobile,user,username,password):
     
-    client = Client(account_sid, auth_token)
-    customer_num='+91'+str(mobile)
-    message = client.messages.create(
-                                body='Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',
-                                from_='+12517665621',
-                                to=customer_num
-                            )
-    return
+#     client = Client(account_sid, auth_token)
+#     customer_num='+91'+str(mobile)
+#     message = client.messages.create(
+#                                 body='Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',
+#                                 from_='+12517665621',
+#                                 to=customer_num
+#                             )
+#     return
+
+
+test = "https://www.fast2sms.com/dev/bulkV2"
+api_key='OHKMb64QLimqUzFkagGXcErhSu8Dxp3lT2eNoYBtnVdRjIyZA7BUvLPobEcpOGnS4659mf1Fxq3ZhCrM'
+# message='Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',
+mobile_number = 7973706779
+
+def userauthsend(mobile,user,username,password):
+    querystring = {"authorization":api_key,"sender_id":"TXTIND","message":'Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',"route":"v3","numbers":mobile_number}
+    headers = {
+    'cache-control': "no-cache"
+    }
+    response = requests.request("GET", test, headers=headers, params=querystring)
+    print(response)
+    return(response)
+
+
