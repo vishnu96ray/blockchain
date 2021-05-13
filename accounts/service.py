@@ -36,10 +36,10 @@ def usesrpass():
 test = "https://www.fast2sms.com/dev/bulkV2"
 api_key='OHKMb64QLimqUzFkagGXcErhSu8Dxp3lT2eNoYBtnVdRjIyZA7BUvLPobEcpOGnS4659mf1Fxq3ZhCrM'
 # message='Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',
-mobile_number = 7973706779
+# mobile_number = 7973706779
 
 def userauthsend(mobile,user,username,password):
-    querystring = {"authorization":api_key,"sender_id":"TXTIND","message":'Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',"route":"v3","numbers":mobile_number}
+    querystring = {"authorization":api_key,"sender_id":"TXTIND","message":'Welcome,\nYour username:'+str(username)+'\npassword:'+str(password)+'\nvisit:https://www/sabzicart.in',"route":"v3","numbers":mobile}
     headers = {
     'cache-control': "no-cache"
     }
