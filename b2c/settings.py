@@ -28,7 +28,7 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
 
 
 # Application definition
@@ -81,13 +81,24 @@ WSGI_APPLICATION = 'b2c.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG == False:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'sabzicart',
+            'USER': 'root',
+            'PASSWORD': 'desh@1001',
+            'HOST': 'localhost',
+            'PORT': '3306'
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -126,11 +137,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT  = "collectstatic"
-STATICFILES_DIRS = BASE_DIR, "static"
+STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR, "media" 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 CALENDAR_API_KEY = '9d77f9f8006f086fb0b7a4e3e4779c9bc001d2e3'
 
