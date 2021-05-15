@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-# import os
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -62,7 +63,8 @@ ROOT_URLCONF = 'b2c.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, "templates"],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +86,7 @@ WSGI_APPLICATION = 'b2c.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,12 +131,16 @@ try:
 except ImportError:
     pass
 
+
 STATIC_URL = '/static/'
-STATIC_ROOT  = "collectstatic"
-STATICFILES_DIRS = BASE_DIR, "static"
+STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR, "media" 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 CALENDAR_API_KEY = '9d77f9f8006f086fb0b7a4e3e4779c9bc001d2e3'
 
