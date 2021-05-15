@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+# import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +28,8 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
+ALLOWED_HOSTS = TRUE
+# ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
 
 
 # Application definition
@@ -80,24 +81,12 @@ WSGI_APPLICATION = 'b2c.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG == False:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sabzicart',
-            'USER': 'root',
-            'PASSWORD': 'desh@1001',
-            'HOST': 'localhost',
-            'PORT': '3306'
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR , 'db.sqlite3',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
