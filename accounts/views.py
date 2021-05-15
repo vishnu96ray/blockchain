@@ -67,7 +67,7 @@ def site_user_registration(request):
             profileinfo.save()
             # username(referralID) and password send to the customer registered Number
             user = user.username
-            # userauthsend(mobile,user,username,password)
+            userauthsend(mobile,user,username,password)
             
             user = authenticate(username=username, password=password)
             if user:

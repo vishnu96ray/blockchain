@@ -5,13 +5,13 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum
-from accounts.models import *
 from .models import ContactUs, Country, BusinessType
 
 
 
 def home(request):
-	return render(request, 'index.html', {'country_list': Country.objects.all(),})
+    template_name = "index.html"
+    return render(request, template_name)
 
 def aboutus(request):
     template_name = "static/aboutus.html"
