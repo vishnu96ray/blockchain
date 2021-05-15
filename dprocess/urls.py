@@ -1,9 +1,10 @@
 from django.conf.urls import url
+from . import views
 from .views import *
 
 
 urlpatterns = [
-    url(r'^$', homepage, name="homepage"),
+    url(r'^$', views.dprocess, name="dprocess"),
     url(r'^about-us/$', aboutus, name="aboutus"),
     url(r'^privacy/$', privacy, name="privacy"),
     url(r'^terms/$', terms, name="terms"),

@@ -10,7 +10,7 @@ from .models import ContactUs, Country, BusinessType
 
 
 
-def homepage(request):
+def dprocess(request):
     template_name = "static/index.html"
     return render(request, template_name)
 
