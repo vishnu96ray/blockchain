@@ -5,12 +5,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum
-from accounts.models import *
 from .models import ContactUs, Country, BusinessType
 
 
 
-def dprocess(request):
+def home(request):
     template_name = "static/index.html"
     return render(request, template_name)
 

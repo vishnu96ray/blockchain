@@ -1,10 +1,11 @@
+from django.urls import path
 from django.conf.urls import url
-from . import views
+from dprocess import views
 from .views import *
 
 
 urlpatterns = [
-    url(r'^$', views.dprocess, name="dprocess"),
+    url(r'^$', home, name="homepage"),
     url(r'^about-us/$', aboutus, name="aboutus"),
     url(r'^privacy/$', privacy, name="privacy"),
     url(r'^terms/$', terms, name="terms"),
