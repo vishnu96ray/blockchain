@@ -10,7 +10,7 @@ from .models import ContactUs, Country, BusinessType
 
 
 def home(request):
-    template_name = "static/index.html"
+    template_name = "index.html"
     return render(request, template_name)
 
 def aboutus(request):
