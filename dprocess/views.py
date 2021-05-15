@@ -11,7 +11,8 @@ from .models import ContactUs, Country, BusinessType
 
 
 def home(request):
-	return render(request, 'index.html', {'country_list': Country.objects.all(),})
+    template_name = "static/index.html"
+    return render(request, template_name)
 
 def aboutus(request):
     template_name = "static/aboutus.html"
