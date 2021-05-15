@@ -12,7 +12,7 @@ from .models import ContactUs, Country, BusinessType
 
 def home(request):
     template_name = "index.html"
-    return render(request, template_name, {'country_list': Country.objects.all(),})
+    return render(request, template_name, {})
 
 def aboutus(request):
     template_name = "static/aboutus.html"

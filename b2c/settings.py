@@ -14,7 +14,9 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -142,14 +144,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 try:
     from .local_settings import *
 except ImportError:
     pass
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 CALENDAR_API_KEY = '9d77f9f8006f086fb0b7a4e3e4779c9bc001d2e3'
 
