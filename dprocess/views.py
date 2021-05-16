@@ -6,12 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from .models import ContactUs, Country, BusinessType
-
-
+from django.http import JsonResponse
 
 def home(request):
     template_name = "index.html"
-    return render(request, template_name)
+    context={"base":settings.BASE_DIR, "template":settings.TEMPLATE_DIR}
+    # return render(request, template_name, context)
+    return JsonResponse(context, status=201)
 
 def aboutus(request):
     template_name = "static/aboutus.html"
