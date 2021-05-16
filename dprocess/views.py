@@ -10,7 +10,7 @@ from .models import ContactUs, Country, BusinessType
 
 
 def home(request):
-    template_name = "index.html"
+    template_name = "/home/ubuntu/blockchain/templates/index.html"
     return render(request, template_name)
 
 def aboutus(request):
