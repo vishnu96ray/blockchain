@@ -7,13 +7,13 @@ import datetime
 
 def referral():
 	rr = random.randint(11111,99999)
-	plus = 'SabziCartb2c'
+	plus = 'SC'
 	x = (plus + str(rr))
 	return x
 
 
 def usesrpass():
-    pp = random.randint(1111111,9999999)
+    pp = random.randint(1111,9999)
     plus = 'sabzi'
     u = (plus + str(pp))
     return u    
