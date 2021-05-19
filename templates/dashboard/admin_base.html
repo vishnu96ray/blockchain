@@ -273,6 +273,7 @@
                       <tr><th>Name</th>
                       <th>Join Amount</th>
                       <th>Ref-Id</th>
+                      <th>Referred By</th>
                       <th>Email</th>
                       <th>Mobile</th>
                       <th>City</th>
@@ -283,6 +284,7 @@
                           <td>{{ referrar.0.applicant }} </td>
                           <td><i class="fa fa-rupee"></i>{{referrar.0.joining_amt}}</td>
                           <td>{{referrar.0.user_referral}}</td>
+                          <td>{{referrar.0.referral_code}}</td>
                           <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{referrar.0.user.email}}</td>
                           <td><i class="fa fa-phone">&nbsp;</i>{{referrar.0.mobile}}</td>
                           <td>{{referrar.0.city}}</td>

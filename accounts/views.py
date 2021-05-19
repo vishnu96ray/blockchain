@@ -72,7 +72,7 @@ def site_user_registration(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-            return redirect("/")
+            return redirect("insite")
     else:
         template_name = 'accounts/user_register.html'
         return render(request, template_name)
