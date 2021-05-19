@@ -31,7 +31,7 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
@@ -86,12 +86,26 @@ WSGI_APPLICATION = 'b2c.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'sabzicartdb',
+            'USER': 'admin',
+            'PASSWORD': 'sabzicart2021',
+            'HOST': 'mysabzicart.c4xsipatzpcp.ap-south-1.rds.amazonaws.com',
+            'PORT': '3306',
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
