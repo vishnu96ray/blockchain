@@ -1,10 +1,6 @@
 from django.shortcuts import render,redirect
 from accounts.models import *
 from django.contrib.auth.decorators import login_required
-import json
-import binascii
-import os
-from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Q, Sum
@@ -13,6 +9,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 import requests
 import json
+from .decorators import unapproved_user
 
 # from .service import calculateProfit
 # SabziCartb2c66468   sabzi7455127
@@ -181,6 +178,7 @@ def update_holidays(request):
 # 	return render(request, 'dashboard/admin_base.html', context)
 
 @login_required(login_url='/')
+@unapproved_user
 def business(request):
     # get all users in descending order of level
     # all_users = UserProfile.objects.all()
@@ -194,6 +192,7 @@ def business(request):
     current_user = UserProfile.objects.get(user=request.user)
     all_users = current_user.get_all_children()
     my_childern_list =[]
+
     referral_id = current_user.user_referral
     my_revenue = 0
     my_revenue_rate = float(current_user.joining_amt) * (0.75/100)
