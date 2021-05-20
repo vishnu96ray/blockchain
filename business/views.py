@@ -200,7 +200,6 @@ def business(request):
     amt = current_user.joining_amt
     my_payable = 0
     referred_by=current_user.referred_by
-    print(referred_by)		
     # children = user.get_all_children()
 
     final_data = []
