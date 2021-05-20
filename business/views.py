@@ -198,7 +198,9 @@ def business(request):
     my_revenue_rate = float(current_user.joining_amt) * (0.75/100)
     my_total_ref_earning = 0
     amt = current_user.joining_amt
-    my_payable = 0		
+    my_payable = 0
+    referred_by=current_user.referred_by
+    print(referred_by)		
     # children = user.get_all_children()
 
     final_data = []
@@ -318,7 +320,7 @@ def business(request):
     context = {'final_data': final_data, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
                'totals_today': totals_today, 'my_ref_id': referral_id, 'amt': amt, 'my_revenue_rate': my_revenue_rate,
-			   'children_count': children_count, 'total_earning': total_earning, 
+			   'children_count': children_count, 'total_earning': total_earning, 'referred_by':referred_by,
 			   'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list}
     return render(request, 'dashboard/admin_base.html', context)
 

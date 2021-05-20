@@ -275,6 +275,7 @@
                       <th>Ref-Id</th>
                       <th>Email</th>
                       <th>Mobile</th>
+                      <th>referred_by</th>
                       <th>City</th>
                     </tr></thead>
                     <tbody>
@@ -285,6 +286,7 @@
                           <td>{{referrar.0.user_referral}}</td>
                           <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{referrar.0.user.email}}</td>
                           <td><i class="fa fa-phone">&nbsp;</i>{{referrar.0.mobile}}</td>
+                          <td>{{referrar.0.referred_by}}</td>
                           <td>{{referrar.0.city}}</td>
                         </tr>
                         {% endfor %}                
