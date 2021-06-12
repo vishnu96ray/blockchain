@@ -300,6 +300,25 @@
               </div>
             </div>
             {% endblock %}
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="{{prevurl}}">Previous</a>
+          </li>
+          {% for n in page.paginator.page_range %}
+            {% if n == page.number %}
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{n}}">{{ n }}<span class="sr-only">(current)</span></a>
+                </li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a> </li>
+            {% endif %}
+          {% endfor %}
+          <li class="page-item">
+            <a class="page-link" href="{{nexturl}}">Next</a>
+          </li>
+        </ul>
+      </nav>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
