@@ -40,10 +40,14 @@ class UserUsageAdmin(admin.ModelAdmin):
     def username(self, obj):
         return obj.userusage.user.username
 
+
 class PayableAdmin(admin.ModelAdmin):
     list_display = ('user', 'date', 'payable')
-    list_filter = ('date',)
+    list_filter = ('date', 'payable')
 
+    def get_queryset(self, request):
+        qs = super(PayableAdmin, self).get_queryset(request)
+        return qs.exclude(payable__lt=100)
 
 
 admin.site.register(UserUsage, UserUsageAdmin)

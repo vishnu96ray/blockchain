@@ -79,6 +79,7 @@ class Payable(models.Model):
     def __str__(self):
         return f'{self.user} {self.payable}'
 
+
 class Holidays(models.Model):
     name = models.CharField(max_length=100, null=True)
     date = models.DateTimeField(auto_now_add=False, null=True)
