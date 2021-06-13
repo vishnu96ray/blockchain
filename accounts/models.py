@@ -9,7 +9,7 @@ from .choices import *
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdetail")
 
-    is_approved = models.BooleanField(default=False, null=True, blank=True)
+    is_approved = models.BooleanField(default=True, null=True, blank=True)
 
     userstatus = models.IntegerField(choices=STATUS_CHOICE, default=1)
     

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'accounts',
     'business',
     'dprocess',
+    'django_celery_beat'
     
 ]
 
@@ -162,3 +163,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 CALENDAR_API_KEY = '9d77f9f8006f086fb0b7a4e3e4779c9bc001d2e3'
 
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+CELERY_BROKER_URL = 'redis://localhost:6379'

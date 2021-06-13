@@ -194,6 +194,7 @@ def business(request):
     my_childern_list =[]
 
     referral_id = current_user.user_referral
+    parent_ref_id = current_user.referral_code
     my_revenue = 0
     my_revenue_rate = float(current_user.joining_amt) * (0.75/100)
     my_total_ref_earning = 0
@@ -315,9 +316,24 @@ def business(request):
 
         final_data.append([user, total_earning, payable])
     my_total = my_total_ref_earning + my_revenue
-    context = {'final_data': final_data, 'all_users': all_users, 'my_revenue': my_revenue,
+
+    # pagination logic
+    paginator = Paginator(final_data, 1) # change this number to how many rows you want to show
+    pg_no = request.GET.get('page', 1)
+    page = paginator.get_page(pg_no)
+
+    prev_url = ''
+    next_url = ''
+
+    if page.has_next():
+        next_url = f'?page={page.next_page_number()}'
+
+    if page.has_previous():
+        prev_url = f'?page={page.previous_page_number()}'
+
+    context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
-               'totals_today': totals_today, 'my_ref_id': referral_id, 'amt': amt, 'my_revenue_rate': my_revenue_rate,
+               'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': amt, 'my_revenue_rate': my_revenue_rate,
 			   'children_count': children_count, 'total_earning': total_earning, 
 			   'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list}
     return render(request, 'dashboard/admin_base.html', context)
