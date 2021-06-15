@@ -31,7 +31,7 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
@@ -99,10 +99,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sabzicartdb',
-            'USER': 'admin',
-            'PASSWORD': 'sabzicart2021',
-            'HOST': 'mysabzicart.c4xsipatzpcp.ap-south-1.rds.amazonaws.com',
+            'NAME': os.getenv('NAME'),
+            'USER': os.getenv('USER'),
+            'PASSWORD': os.getenv('PASSWORD'),
+            'HOST': os.getenv('HOST'),
             'PORT': '3306',
         }
     }
@@ -165,3 +165,11 @@ CALENDAR_API_KEY = '9d77f9f8006f086fb0b7a4e3e4779c9bc001d2e3'
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sabzicart.com@gmail.com'
+EMAIL_HOST_PASSWORD = 'sabzicart@2021'
+
