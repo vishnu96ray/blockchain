@@ -21,7 +21,6 @@ from decouple import config
 # BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'template'),
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -31,7 +30,7 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
@@ -49,8 +48,8 @@ INSTALLED_APPS = [
     'accounts',
     'business',
     'dprocess',
-    'django_celery_beat'
-    
+    'django_celery_beat',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -173,3 +172,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
+
+CELERY_BEAT_SCHEDULE = {
+    'scheduled_task': {
+        'task': 'accounts.tasks.calculation',
+        'schedule': 100.0
+    }
+}
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

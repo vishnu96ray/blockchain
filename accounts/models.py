@@ -9,7 +9,7 @@ from .choices import *
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdetail")
 
-    is_approved = models.BooleanField(default=True, null=True, blank=True)
+    is_approved = models.BooleanField(default=False, null=True, blank=True)
 
     userstatus = models.IntegerField(choices=STATUS_CHOICE, default=1)
     
@@ -62,6 +62,7 @@ class UserProfile(models.Model):
             parents.extend(parent.get_all_parents())
         return parents
 
+
 class UserUsage(models.Model):
     userusage = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="usrusage")
     quantity = models.IntegerField(default=0)
@@ -84,4 +85,9 @@ class Holidays(models.Model):
     name = models.CharField(max_length=100, null=True)
     date = models.DateTimeField(auto_now_add=False, null=True)
     type = models.CharField(max_length=70, null=True)
-    
+
+
+class Reinvestment(models.Model):
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    amount = models.FloatField(null=True)

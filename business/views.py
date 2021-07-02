@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from accounts.models import *
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -16,7 +16,7 @@ from .decorators import unapproved_user
 # SabziCartb2c76860	sabzi6052640
 # SabziCartb2c49766   sabzi6725097
 # SabziCartb2c30871	sabzi9265713
-					# sabzi3925600
+                    # sabzi3925600
 
 # @login_required(login_url='/')
 # def business(request):
@@ -27,7 +27,7 @@ from .decorators import unapproved_user
 # 	applicant_name = all_data.applicant
 
 # 	total_referrar = UserProfile.objects.filter(referral_code=myreferralid).count()
-	
+
 
 # 	# my_referrar = UserProfile.objects.filter(referral_code=referral_code)
 # 	my_referrar = UserProfile.objects.filter(referral_code=myreferralid)
@@ -43,7 +43,7 @@ from .decorators import unapproved_user
 # 	tte = tre + revenue
 # 		# print(bb//3)
 
-	
+
 # 	# total_referrar = UserProfile.objects.filter(referral_code=referral_code, user=request.user).count()
 # 	# print(total_referrar,1111)
 # 	user = UserProfile.objects.filter(user=request.user)
@@ -67,6 +67,7 @@ from .decorators import unapproved_user
 # 	# print(abc,111111111111)
 
 # 	return render(request, 'dashboard/admin_base.html', {'myreferralid':myreferralid,'tte':tte, 'revenue':revenue, 'tre':tre, 'fee':amt, 'applicant_name':applicant_name, 'my_referrar':my_referrar, 'total_referrar':total_referrar})
+
 
 def update_holidays(request):
     today = datetime.now().date()
@@ -104,7 +105,7 @@ def update_holidays(request):
 #     # loop through each user
 #     # for user in all_users:
 #         # get all direct and indirect parents of this user
-		
+
 # 	user = UserProfile.objects.get(user=request.user)
 # 	referral_code = user.user_referral
 # 	username = user.applicant
@@ -180,12 +181,9 @@ def update_holidays(request):
 @login_required(login_url='/')
 @unapproved_user
 def business(request):
-    # get all users in descending order of level
-    # all_users = UserProfile.objects.all()
     today = datetime.now().date()
 
     yesterday = today - timedelta(days=1)
-
     last_day_totals = Payable.objects.filter(date__date=yesterday)
     totals_today = Payable.objects.filter(date__date=today)
 
@@ -196,49 +194,54 @@ def business(request):
     referral_id = current_user.user_referral
     parent_ref_id = current_user.referral_code
     my_revenue = 0
-    my_revenue_rate = float(current_user.joining_amt) * (0.75/100)
     my_total_ref_earning = 0
     amt = current_user.joining_amt
-    my_payable = 0		
-    # children = user.get_all_children()
+    my_payable = Payable.objects.filter(user=current_user).order_by('-date').first().payable
+
+    joining_date = current_user.user.date_joined.date()
+
+    my_re = Reinvestment.objects.filter(profile=current_user).order_by('date')
+
+    final_d = []
+    if len(my_re) != 0:
+        for x in my_re:
+            if len(final_d) != 0:
+                amt = final_d[len(final_d)-1][1]
+            re_date = x.date.date()
+            diff = (re_date - joining_date).days
+            rev = diff * (0.75/100) * float(amt)
+            left_of_initial_amount = float(amt) - rev
+            final_d.append([left_of_initial_amount, (left_of_initial_amount + float(x.amount))])
+
+    if len(final_d) != 0:
+        amt = final_d[len(final_d)-1][1]
+
+    final_amount = float(amt)
+
+    my_revenue_rate = float(final_amount) * (0.75 / 100)
+
+    date_difference = (today - joining_date).days
+    if date_difference < 270:
+        delta = date_difference
+    else:
+        delta = 270
+
+    for i in range(delta+1):
+        day = joining_date + timedelta(days=i)
+        is_holiday = Holidays.objects.filter(date__date=day).first()
+        if day.weekday() == 5 or day.weekday() == 6 or is_holiday:
+            pass
+        else:
+            my_revenue += my_revenue_rate
 
     final_data = []
     for user in all_users:
-        # get all direct and indirect parents of this user
-        children_count = 1
-        amount = float(user.joining_amt)
-        revenue_rate = amount * (0.75/100)
-        print(revenue_rate)
-        revenue = 0
-
-        joining_date = user.user.date_joined.date()
-
-        date_difference = (today - joining_date).days
-
-        if date_difference < 270:
-            delta = date_difference
-        else:
-            delta = 270
-
-        for i in range(delta+1):
-            day = joining_date + timedelta(days=i)
-            is_holiday = Holidays.objects.filter(date__date=day).first()
-            if day.weekday() == 5 or day.weekday() == 6 or is_holiday:
-                pass
-            else:
-                revenue += revenue_rate
-
-            # print(f'{day} => {day.weekday()}')
-
-        print(date_difference)
-
         total_ref_earning = 0
 
         children_list = []
 
         children = user.get_all_children()
 
-        print(f'\ncurrent user => {user.applicant} ({user.user})\n')
         my_difference = int(user.level) - int(current_user.level)
         if my_difference <= 10:
             my_childern_list.append(user)
@@ -254,71 +257,22 @@ def business(request):
                     commission = 0.05
 
                 if difference <= 10:
-                    offset = '-' * difference
-
-                    children_count += 1
 
                     children_list.append(t)
 
                     calculated_commission = float(t.joining_amt) * (commission / 100)
                     total_ref_earning += calculated_commission
-
-                    print(f'{offset}{user} got {calculated_commission} from {t}')
-            print(children_count)
         else:
             total_ref_earning = 0
 
-        print(f' total ref +> {total_ref_earning}')
-
         if user == current_user:
-            my_revenue = revenue
             my_total_ref_earning = total_ref_earning
 
-        total_earning = revenue + total_ref_earning
-
-        print(f'{total_earning}  {revenue}')
-
-        if yesterday.weekday() == 5:
-            last_day = today - timedelta(days=2)
-            yesterday_payable = Payable.objects.filter(user=user, date__date=last_day).first()
-        elif yesterday.weekday() == 6:
-            last_day = today - timedelta(days=3)
-            yesterday_payable = Payable.objects.filter(user=user, date__date=last_day).first()
-        elif Holidays.objects.filter(date__date=yesterday):
-            last_day = today - timedelta(days=2)
-            yesterday_payable = Payable.objects.filter(user=user, date__date=last_day).first()
-        else:
-            yesterday_payable = last_day_totals.filter(user=user).first()
-
-        if not yesterday_payable:
-            total_yesterday = 0.0
-        else:
-            total_yesterday = yesterday_payable.total_earning
-
-        is_holiday_today = Holidays.objects.filter(date__date=today).first()
-        if today.weekday() == 5 or today.weekday() == 6 or is_holiday_today:
-            payable = 0
-        else:
-            payable_temp = total_earning - total_yesterday
-            payable = payable_temp - (payable_temp * 0.1)
-        if user == current_user:
-            my_payable = payable
-        if not totals_today.filter(user=user).first():
-            total_earning_for_this_user = Payable(user=user, total_earning=total_earning, payable=payable)
-            total_earning_for_this_user.save()
-        else:
-            this_users_payable = totals_today.filter(user=user).first()
-            if this_users_payable.total_earning != total_earning or this_users_payable.payable != payable:
-                this_users_payable.total_earning = total_earning
-                this_users_payable.payable = payable
-                this_users_payable.save()
-
-
-        final_data.append([user, total_earning, payable])
+        final_data.append([user])
     my_total = my_total_ref_earning + my_revenue
 
     # pagination logic
-    paginator = Paginator(final_data, 1) # change this number to how many rows you want to show
+    paginator = Paginator(final_data, 20) # change this number to how many rows you want to show
     pg_no = request.GET.get('page', 1)
     page = paginator.get_page(pg_no)
 
@@ -333,13 +287,20 @@ def business(request):
 
     context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
-               'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': amt, 'my_revenue_rate': my_revenue_rate,
-			   'children_count': children_count, 'total_earning': total_earning, 
-			   'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list}
+               'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': current_user.joining_amt, 'my_revenue_rate': my_revenue_rate,
+               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list}
     return render(request, 'dashboard/admin_base.html', context)
 
 
-
 def userprofile(request):
-	return render(request, 'dashboard/user_profile.html')	
-	
+    return render(request, 'dashboard/user_profile.html')
+
+
+def reinvest(request):
+    profile = request.user.userdetail
+    if request.method == 'POST':
+        re_amount = request.POST.get('re_amount')
+        reinvestment = Reinvestment(amount=re_amount, profile=profile)
+        reinvestment.save()
+        return redirect('insite')
+    return render(request, 'accounts/reinvest.html')

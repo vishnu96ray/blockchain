@@ -136,10 +136,10 @@
                 Welcome, <b>{{user}}</b>
             </div>
             <div class="col-lg-3 col-md-3 bg-success pt-2 pb-2 text-light">
-                My Joining Amount: <b class="fa fa-rupee">&nbsp;{{amt}}</b>
+                My Joining Amount: <b class="fa fa-rupee">&nbsp;{{amt|floatformat:2}}</b>
                 </div>
                 <div class="col-lg-3 col-md-3 bg-danger pt-2 pb-2 text-light">
-                  Payable Amount: <b class="fa fa-rupee">&nbsp;{{my_payable}}</b>
+                  Payable Amount: <b class="fa fa-rupee">&nbsp;{{my_payable|floatformat:2}}</b>
                   </div>        
                 <div class="col-lg-3 col-md-3 bg-primary pt-2 pb-2 text-light">        
                     My Referral ID: <b>{{my_ref_id}} </b> 
@@ -153,7 +153,7 @@
                     <i class="fa fa-rupee"></i>
                   </div>
                   <p class="card-category">Total Earns</p>
-                  <h3 class="card-title">{{my_total|default:0}}
+                  <h3 class="card-title">{{my_total|default:0|floatformat:2}}
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -168,7 +168,7 @@
                     <i class="fa fa-rupee"></i>
                   </div>
                   <p class="card-category">Revenue</p>
-                  <h3 class="card-title">{{my_revenue_rate|default:0}}</h3>
+                  <h3 class="card-title">{{my_revenue_rate|default:0|floatformat:2}}</h3>
                 </div>
                 <div class="card-footer">
                   

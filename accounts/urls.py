@@ -21,9 +21,9 @@ urlpatterns = [
     # url(r'^accounts/ReferralDetails/(?P<referral>[\w-]+)$', ReferralDetails, name="ReferralDetails"),
 
 
-    url(r'^accounts/password_reset/$', auth_views.PasswordResetView.as_view(), name="password_reset"),
-    url(r'^accounts/_reset/done/$', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    url(r'^accounts/reset/done/$', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+    url(r'^accounts/password_reset/$', auth_views.PasswordResetView.as_view(template_name='accounts/forgotpassword.html'), name="password_reset"),
+    url(r'^accounts/_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='accounts/pw_sent.html'), name="password_reset_done"),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', auth_views.PasswordResetConfirmView.as_view(template_name='accounts/confirm.html'), name="password_reset_confirm"),
+    url(r'^accounts/reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='accounts/pw_done.html'), name="password_reset_complete"),
 
 ]

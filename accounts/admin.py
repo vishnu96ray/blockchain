@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import *
+from import_export.admin import ImportExportModelAdmin
 
 
-class UserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(ImportExportModelAdmin):
     list_display = (
         'id', 'applicant', 'sodowo','gender','dob','age','pan','joining_amt','district','city','state','pincode','address',
         'sponsor_name','sponsor_mobile', 'user_referral', 'referral_code','receipt_pic', 'referred_by', 'level',
@@ -45,13 +46,14 @@ class PayableAdmin(admin.ModelAdmin):
     list_display = ('user', 'date', 'payable')
     list_filter = ('date', 'payable')
 
-    def get_queryset(self, request):
-        qs = super(PayableAdmin, self).get_queryset(request)
-        return qs.exclude(payable__lt=100)
+    # def get_queryset(self, request):
+    #     qs = super(PayableAdmin, self).get_queryset(request)
+    #     return qs.exclude(payable__lt=100)
 
 
 admin.site.register(UserUsage, UserUsageAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Payable, PayableAdmin)
 admin.site.register(Holidays)
+admin.site.register(Reinvestment)
 
