@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import *
@@ -43,12 +44,27 @@ class UserUsageAdmin(admin.ModelAdmin):
 
 
 class PayableAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'payable')
+    actions = ['activate_payable']
+    list_display = ('user', 'joining_date', 'date', 'last_date', 'payable', 'is_activated')
     list_filter = ('date', 'payable')
 
-    # def get_queryset(self, request):
-    #     qs = super(PayableAdmin, self).get_queryset(request)
-    #     return qs.exclude(payable__lt=100)
+    @admin.action(description='Activate Payable')
+    def activate_payable(self, request, queryset):
+        queryset.update(is_activated=True)
+
+    def get_queryset(self, request):
+        qs = super(PayableAdmin, self).get_queryset(request)
+        return qs.exclude(payable__lt=100)
+
+    def joining_date(self, obj):
+        rein = obj.user.reinvestment_set.order_by('-date').first()
+        if rein is None:
+            return obj.user.user.date_joined
+        else:
+            return rein.date
+
+    def last_date(self, obj):
+        return obj.user.user.date_joined + timedelta(days=270)
 
 
 admin.site.register(UserUsage, UserUsageAdmin)

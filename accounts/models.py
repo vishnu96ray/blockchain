@@ -72,6 +72,7 @@ class UserUsage(models.Model):
     
 
 class Payable(models.Model):
+    is_activated = models.BooleanField(default=False, null=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     total_earning = models.FloatField(null=True, default=0.0)
     payable = models.FloatField(null=True, default=0.0)

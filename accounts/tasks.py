@@ -1,9 +1,39 @@
+import json
+
 from celery import shared_task
 from .models import *
 from datetime import datetime, timedelta
+from django.conf import settings
+import requests
 
 today = datetime.now().date()
 yesterday = today - timedelta(days=1)
+
+
+@shared_task
+def update_holidays():
+    today = datetime.now().date()
+    holidays_this_year = Holidays.objects.filter(date__date__year=today.year)
+
+    if len(holidays_this_year) == 0:
+        response = requests.get(
+            f'https://calendarific.com/api/v2/holidays?api_key={settings.CALENDAR_API_KEY}&country=IN&year=2021'
+        )
+        # print(response.content)
+        json_response = json.loads(response.content)
+        for h in json_response['response']['holidays']:
+            h_name = str(h['name'])
+            d = h['date']['iso'].split('T')[0]
+            h_date = datetime.strptime(d, '%Y-%m-%d')
+            h_type = str(h['type'][0])
+            holiday = Holidays(name=h_name, date=h_date, type=h_type)
+
+            holiday.save()
+            print(holiday)
+            print('\n')
+
+        return 'Holidays Updated'
+
 
 @shared_task
 def calculation():

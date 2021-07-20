@@ -196,7 +196,9 @@ def business(request):
     my_revenue = 0
     my_total_ref_earning = 0
     amt = current_user.joining_amt
-    my_payable = Payable.objects.filter(user=current_user).order_by('-date').first().payable
+    my_payable = Payable.objects.filter(user=current_user, is_activated=True).order_by('-date').first()
+
+    my_payable = 0.0 if my_payable is None else float(my_payable.payable)
 
     joining_date = current_user.user.date_joined.date()
 
