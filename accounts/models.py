@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -80,6 +82,16 @@ class Payable(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.payable}'
+
+    def joining_date(self):
+        rein = self.user.reinvestment_set.order_by('-date').first()
+        if rein is None:
+            return self.user.user.date_joined
+        else:
+            return rein.date
+
+    def last_date(self):
+        return self.user.user.date_joined + timedelta(days=270)
 
 
 class Holidays(models.Model):

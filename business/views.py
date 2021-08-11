@@ -306,3 +306,16 @@ def reinvest(request):
         reinvestment.save()
         return redirect('insite')
     return render(request, 'accounts/reinvest.html')
+
+
+def payable(request):
+    payables = Payable.objects.filter(payable__gte=100).order_by('-date')
+    context = {'payables': payables}
+    return render(request, 'dashboard/payables.html', context)
+
+
+def activate_payable(request, pk):
+    payable = Payable.objects.get(id=pk)
+    payable.is_activated = True
+    payable.save()
+    return redirect('payable')
