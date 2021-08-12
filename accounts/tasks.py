@@ -146,3 +146,11 @@ def calculation():
                 this_users_payable.save()
 
     return 'done'
+
+
+@shared_task
+def clean_payable():
+    date = datetime.now().date() - timedelta(days=10)
+    payables = Payable.objects.filter(date__date__lte=date)
+    payables.delete()
+    return 'cleaned'

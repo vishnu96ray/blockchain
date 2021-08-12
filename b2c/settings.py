@@ -20,6 +20,11 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 MEDIA_DIR = os.path.join(BASE_DIR,'media')
 from decouple import config
+import json
+
+# with open('/etc/config.json') as config_file:
+#     config = json.load(config_file)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'template'),
 
@@ -184,6 +189,10 @@ CELERY_BEAT_SCHEDULE = {
     'update_holidays_task': {
         'task': 'accounts.tasks.update_holidays',
         'schedule': crontab(0, 0, day_of_month='1', month_of_year='1')
+    },
+    'clean_payables': {
+        'task': 'accounts.tasks.clean_payable',
+        'schedule': 60.0
     }
 }
 
