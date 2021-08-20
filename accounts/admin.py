@@ -10,7 +10,7 @@ class UserProfileAdmin(ImportExportModelAdmin):
         'id', 'applicant', 'sodowo','gender','dob','age','pan','joining_amt','district','city','state','pincode','address',
         'sponsor_name','sponsor_mobile', 'user_referral', 'referral_code','receipt_pic', 'referred_by', 'level',
         'user_email', 'username', 'mobile', 'first_name', 'last_name', 'last_login', 'date_joined', 'address',
-        'userstatus', 'login_as_user')
+        'userstatus', 'login_as_user', 'account_no', 'ifsc_code')
     list_filter = ('user__date_joined', 'user__last_login', 'userstatus')
     search_fields = ('user__email', 'user__username')
 
