@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import *
@@ -45,7 +45,7 @@ class UserUsageAdmin(admin.ModelAdmin):
 
 class PayableAdmin(admin.ModelAdmin):
     actions = ['activate_payable']
-    list_display = ('user', 'joining_date', 'date', 'last_date', 'payable', 'is_activated')
+    list_display = ('user', 'joining_date', 'date', 'last_date', 'days', 'payable', 'is_activated')
     list_filter = ('date', 'payable')
 
     @admin.action(description='Activate Payable')
@@ -65,6 +65,10 @@ class PayableAdmin(admin.ModelAdmin):
 
     def last_date(self, obj):
         return obj.user.user.date_joined + timedelta(days=270)
+
+    def days(self, obj):
+        date = obj.user.user.date_joined + timedelta(days=270)
+        return (date.date() - datetime.now().date()).days
 
 
 admin.site.register(UserUsage, UserUsageAdmin)

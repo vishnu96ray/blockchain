@@ -192,7 +192,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'clean_payables': {
         'task': 'accounts.tasks.clean_payable',
-        'schedule': 60.0
+        'schedule': crontab(0, 0)
     }
 }
 
