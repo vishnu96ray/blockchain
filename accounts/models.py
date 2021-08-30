@@ -43,6 +43,8 @@ class UserProfile(models.Model):
 
     referred_by = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     level = models.CharField(max_length=4, null=True, blank=True)
+    account_no = models.CharField(max_length=250, null=True, blank=True)
+    ifsc_code = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return str(self.user.username)
