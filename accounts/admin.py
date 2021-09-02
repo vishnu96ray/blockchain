@@ -43,9 +43,9 @@ class UserUsageAdmin(admin.ModelAdmin):
         return obj.userusage.user.username
 
 
-class PayableAdmin(admin.ModelAdmin):
+class PayableAdmin(ImportExportModelAdmin):
     actions = ['activate_payable']
-    list_display = ('user', 'joining_date', 'date', 'last_date', 'days', 'payable', 'is_activated')
+    list_display = ('user', 'name', 'joining_date', 'date', 'last_date', 'days', 'payable', 'is_activated')
     list_filter = ('date', 'payable')
 
     @admin.action(description='Activate Payable')
@@ -55,6 +55,9 @@ class PayableAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(PayableAdmin, self).get_queryset(request)
         return qs.exclude(payable__lt=100)
+
+    def name(self, obj):
+        return obj.user.user
 
     def joining_date(self, obj):
         rein = obj.user.reinvestment_set.order_by('-date').first()
