@@ -223,10 +223,10 @@ def business(request):
     my_revenue_rate = float(final_amount) * (0.75 / 100)
 
     date_difference = (today - joining_date).days
-    if date_difference < 270:
+    if date_difference < 266:
         delta = date_difference
     else:
-        delta = 270
+        delta = 266
 
     for i in range(delta+1):
         day = joining_date + timedelta(days=i)
