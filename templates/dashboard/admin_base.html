@@ -330,6 +330,54 @@
           </li>
         </ul>
       </nav>
+
+      <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">View Referrals Of User</h4>
+              <form>
+                <select class="form-control" name="u">
+                  <option value="" selected>Select User</option>
+                  {% for u in all %}
+                    {% if u.id|floatformat:"0" == request.GET.u %}
+                      <option value="{{u.id}}" selected>{{u}}</option>
+                    {% else %}
+                      <option value="{{u.id}}">{{u}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-info" value="Go">
+              </form>
+            </div>
+            <div class="card-body table-responsive">
+              <table class="table table-hover">
+                <thead class="text-warning">
+                  <!--<th>ID</th>-->
+                  <tr><th>Name</th>
+                  <th>Join Amount</th>
+                  <th>Ref-Id</th>
+                  <th>Email</th>
+                  <th>Level</th>
+                </tr></thead>
+                <tbody>
+                     {% for u in target_refs %}
+                    <tr>
+                      <td>{{ u.applicant }} </td>
+                      <td><i class="fa fa-rupee"></i>{{u.joining_amt}}</td>
+                      <td>{{u.user_referral}}</td>
+                      <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{u.user.email}}</td>
+                      <td>{{u.level}}</td>
+                    </tr>
+                    {% endfor %}
+
+
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">

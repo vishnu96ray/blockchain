@@ -223,10 +223,10 @@ def business(request):
     my_revenue_rate = float(final_amount) * (0.75 / 100)
 
     date_difference = (today - joining_date).days
-    if date_difference < 270:
+    if date_difference < 266:
         delta = date_difference
     else:
-        delta = 270
+        delta = 266
 
     for i in range(delta+1):
         day = joining_date + timedelta(days=i)
@@ -287,10 +287,20 @@ def business(request):
     if page.has_previous():
         prev_url = f'?page={page.previous_page_number()}'
 
+    all_user_for_select = UserProfile.objects.all()
+    user_for_ref = request.GET.get('u', '')
+    target_refs = []
+    if user_for_ref != '':
+        target_user = all_user_for_select.get(id=user_for_ref)
+        temp_list = target_user.get_all_children()
+        for u in temp_list:
+            if int(u.level) - int(target_user.level) <= 10:
+                target_refs.append(u)
+
     context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
                'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': current_user.joining_amt, 'my_revenue_rate': my_revenue_rate,
-               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list}
+               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list, 'all': all_user_for_select, 'target_refs': target_refs}
     return render(request, 'dashboard/admin_base.html', context)
 
 

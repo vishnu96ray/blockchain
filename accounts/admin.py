@@ -57,7 +57,7 @@ class PayableAdmin(ImportExportModelAdmin):
         return qs.exclude(payable__lt=100)
 
     def name(self, obj):
-        return obj.user.user
+        return obj.user.applicant
 
     def joining_date(self, obj):
         rein = obj.user.reinvestment_set.order_by('-date').first()
@@ -67,10 +67,10 @@ class PayableAdmin(ImportExportModelAdmin):
             return rein.date
 
     def last_date(self, obj):
-        return obj.user.user.date_joined + timedelta(days=270)
+        return obj.user.user.date_joined + timedelta(days=266)
 
     def days(self, obj):
-        date = obj.user.user.date_joined + timedelta(days=270)
+        date = obj.user.user.date_joined + timedelta(days=266)
         return (date.date() - datetime.now().date()).days
 
 

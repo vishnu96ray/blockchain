@@ -38,7 +38,7 @@ SECRET_KEY = '1e+c8kjyiabg8$rnd(p(s@#s-79k+h5o-nur4xhpocdiy07#i6'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ['blockchain-sabzicart.herokuapp.com', 'localhost', '65.2.110.130', 'www.sabzicart.in', 'sabzicart.in']
