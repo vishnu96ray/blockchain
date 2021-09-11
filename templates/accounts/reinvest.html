@@ -7,12 +7,12 @@
     <form method="post" id="new-login-form" name="new-login-form">
     {% csrf_token %}
      <div class="col-md-12 center">
-         {% if request.GET.msg %}
+         {% for m in messages %}
             <div class="alert alert-danger alert-dismissable" role="alert">
                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;</button>
-                <i class="fa fa-2x fa-rocket"></i></i>{{ request.GET.msg }}
+                <i class="fa fa-2x fa-rocket"></i></i>{{ m }}
             </div>
-         {% endif %}
+         {% endfor %}
         </div>
     <div class="form-row">
         <div class="form-group col-md-12">
