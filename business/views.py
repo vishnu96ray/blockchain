@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from accounts.models import *
 from django.contrib.auth.decorators import login_required
@@ -312,9 +313,12 @@ def reinvest(request):
     profile = request.user.userdetail
     if request.method == 'POST':
         re_amount = request.POST.get('re_amount')
-        reinvestment = Reinvestment(amount=re_amount, profile=profile)
-        reinvestment.save()
-        return redirect('insite')
+        if float(re_amount) <= 1000000.0:
+            reinvestment = Reinvestment(amount=re_amount, profile=profile)
+            reinvestment.save()
+            return redirect('insite')
+        else:
+            messages.info(request, 'Reinvestemt Amount Over 10,00,000 Is Not Allowed')
     return render(request, 'accounts/reinvest.html')
 
 
