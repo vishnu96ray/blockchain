@@ -2,6 +2,7 @@ import json
 import binascii
 import os
 from django.contrib.auth import authenticate, logout, login
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -36,7 +37,9 @@ def site_user_registration(request):
           
         district  = request.POST.get("district")  
         city      = request.POST.get("city")
-        state     = request.POST.get("state")  
+        state     = request.POST.get("state")
+        ifsc_code = request.POST.get("ifsc_code")
+        account_no= request.POST.get("account_no")  
         pincode   = request.POST.get("pincode")
         address   = request.POST.get("address", "")
         sponsor_name = request.POST.get("sponsor_name")
@@ -54,7 +57,7 @@ def site_user_registration(request):
             # user.is_staff=True
             user.is_active = True
             user.save()
-            profileinfo = UserProfile(user=user, user_referral=user_referral, applicant=applicant, sodowo=sodowo, gender=gender, city=city,district=district, state=state, pincode=pincode, dob=dob, age=age, pan=pan, address=address,joining_amt=joining_amt, sponsor_name=sponsor_name, sponsor_mobile=sponsor_mobile, referral_code=referral_code, mobile=mobile, userstatus=1,)
+            profileinfo = UserProfile(user=user, user_referral=user_referral, applicant=applicant, sodowo=sodowo, gender=gender, city=city,district=district, state=state, pincode=pincode, dob=dob, age=age, pan=pan, address=address,joining_amt=joining_amt, sponsor_name=sponsor_name, sponsor_mobile=sponsor_mobile, referral_code=referral_code, mobile=mobile, userstatus=1,ifsc_code=ifsc_code,account_no=account_no,)
             print(referral_code)
 
             if referral_code is None:
@@ -67,12 +70,12 @@ def site_user_registration(request):
             profileinfo.save()
             # username(referralID) and password send to the customer registered Number
             user = user.username
-            # userauthsend(mobile,user,username,password)
+            userauthsend(mobile,user,username,password)
             
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-            return redirect("/")
+            return redirect("insite")
     else:
         template_name = 'accounts/user_register.html'
         return render(request, template_name)

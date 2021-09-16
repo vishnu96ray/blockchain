@@ -1,0 +1,28 @@
+{% extends 'accounts/base.html'%}
+{% load static %}
+{% block main %}
+<div class="container mt-5" style="margin-bottom:150px;">
+    <div style="padding: 10px; box-shadow: 5px 10px 18px #888888; margin-bottom: 20px; border-radius: 4px;">
+    <h2 class="mt-1 mb-2">Reinvest</h2>
+    <form method="post" id="new-login-form" name="new-login-form">
+    {% csrf_token %}
+     <div class="col-md-12 center">
+         {% for m in messages %}
+            <div class="alert alert-danger alert-dismissable" role="alert">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">&times;</button>
+                <i class="fa fa-2x fa-rocket"></i></i>{{ m }}
+            </div>
+         {% endfor %}
+        </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+          <label>Amount</label>
+          <input type="text" class="form-control" name="re_amount" placeholder="Reinvestment Amount" required="">
+        </div>
+    </div>
+
+  <button type="submit" class="btn btn-success" id="newloginbutton">Reinvest</button>
+</form>
+</div>
+</div>
+{% endblock %}

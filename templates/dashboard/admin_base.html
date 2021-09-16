@@ -24,7 +24,7 @@
 
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="{% static 'dashboard/assets/img/sidebar-1.jpg' %}">
       
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a  class="simple-text logo-normal">
           SabziCart Business
         </a></div>
       <div class="sidebar-wrapper">
@@ -39,6 +39,12 @@
             <a class="nav-link" href="#">
               <i class="material-icons">person</i>
               <p>User Profile</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'payable' %}">
+              <i class="material-icons">person</i>
+              <p>Payables</p>
             </a>
           </li>
           <li class="nav-item">
@@ -68,6 +74,7 @@
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="javascript:;">Dashboard</a>
+            <a class="navbar-brand"  href="/accounts/logout/">Logout</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -136,14 +143,18 @@
                 Welcome, <b>{{user}}</b>
             </div>
             <div class="col-lg-3 col-md-3 bg-success pt-2 pb-2 text-light">
-                My Joining Amount: <b class="fa fa-rupee">&nbsp;{{amt}}</b>
+                My Joining Amount: <b class="fa fa-rupee">&nbsp;{{amt|floatformat:2}}</b>
                 </div>
                 <div class="col-lg-3 col-md-3 bg-danger pt-2 pb-2 text-light">
-                  Payable Amount: <b class="fa fa-rupee">&nbsp;{{my_payable}}</b>
+                  Payable Amount: <b class="fa fa-rupee">&nbsp;{{my_payable|floatformat:2}}</b>
                   </div>        
-                <div class="col-lg-3 col-md-3 bg-primary pt-2 pb-2 text-light">        
+                <!-- <div class="col-lg-3 col-md-3 bg-primary pt-2 pb-2 text-light">        
                     My Referral ID: <b>{{my_ref_id}} </b> 
-                </div>
+                </div> -->
+                <div class="col-lg-3 col-md-3 bg-primary pt-2 pb-2 text-light">        
+                  For Reinvestment  : 
+                  <a href="/reinvest/">Click Here</a> 
+              </div>
             
                         <hr>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -153,7 +164,7 @@
                     <i class="fa fa-rupee"></i>
                   </div>
                   <p class="card-category">Total Earns</p>
-                  <h3 class="card-title">{{my_total|default:0}}
+                  <h3 class="card-title">{{my_total|default:0|floatformat:2}}
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -168,7 +179,7 @@
                     <i class="fa fa-rupee"></i>
                   </div>
                   <p class="card-category">Revenue</p>
-                  <h3 class="card-title">{{my_revenue_rate|default:0}}</h3>
+                  <h3 class="card-title">{{my_revenue_rate|default:0|floatformat:2}}</h3>
                 </div>
                 <div class="card-footer">
                   
@@ -244,12 +255,12 @@
                   <div class="ct-chart" id="completedTasksChart"></div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Completed Tasks</h4>
-                  <p class="card-category">Last Campaign Performance</p>
+                  <h4 class="card-title">Payable Days</h4>
+                  <p class="card-category">266 Total Days Of Return</p>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+                    <i class="material-icons">access_time</i> 133 dyas left
                   </div>
                 </div>
               </div>
@@ -273,6 +284,7 @@
                       <tr><th>Name</th>
                       <th>Join Amount</th>
                       <th>Ref-Id</th>
+                      <th>Referred By</th>
                       <th>Email</th>
                       <th>Mobile</th>
                       <th>City</th>
@@ -283,6 +295,7 @@
                           <td>{{ referrar.0.applicant }} </td>
                           <td><i class="fa fa-rupee"></i>{{referrar.0.joining_amt}}</td>
                           <td>{{referrar.0.user_referral}}</td>
+                          <td>{{referrar.0.referral_code}}</td>
                           <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{referrar.0.user.email}}</td>
                           <td><i class="fa fa-phone">&nbsp;</i>{{referrar.0.mobile}}</td>
                           <td>{{referrar.0.city}}</td>
@@ -298,6 +311,73 @@
               </div>
             </div>
             {% endblock %}
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="{{prevurl}}">Previous</a>
+          </li>
+          {% for n in page.paginator.page_range %}
+            {% if n == page.number %}
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{n}}">{{ n }}<span class="sr-only">(current)</span></a>
+                </li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a> </li>
+            {% endif %}
+          {% endfor %}
+          <li class="page-item">
+            <a class="page-link" href="{{nexturl}}">Next</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">View Referrals Of User</h4>
+              <form>
+                <select class="form-control" name="u">
+                  <option value="" selected>Select User</option>
+                  {% for u in all %}
+                    {% if u.id|floatformat:"0" == request.GET.u %}
+                      <option value="{{u.id}}" selected>{{u}}</option>
+                    {% else %}
+                      <option value="{{u.id}}">{{u}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-info" value="Go">
+              </form>
+            </div>
+            <div class="card-body table-responsive">
+              <table class="table table-hover">
+                <thead class="text-warning">
+                  <!--<th>ID</th>-->
+                  <tr><th>Name</th>
+                  <th>Join Amount</th>
+                  <th>Ref-Id</th>
+                  <th>Email</th>
+                  <th>Level</th>
+                </tr></thead>
+                <tbody>
+                     {% for u in target_refs %}
+                    <tr>
+                      <td>{{ u.applicant }} </td>
+                      <td><i class="fa fa-rupee"></i>{{u.joining_amt}}</td>
+                      <td>{{u.user_referral}}</td>
+                      <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{u.user.email}}</td>
+                      <td>{{u.level}}</td>
+                    </tr>
+                    {% endfor %}
+
+
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">

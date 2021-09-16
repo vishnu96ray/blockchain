@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -8,6 +10,8 @@ from .choices import *
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="userdetail")
+
+    is_approved = models.BooleanField(default=False, null=True, blank=True)
 
     userstatus = models.IntegerField(choices=STATUS_CHOICE, default=1)
     
@@ -39,6 +43,8 @@ class UserProfile(models.Model):
 
     referred_by = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     level = models.CharField(max_length=4, null=True, blank=True)
+    account_no = models.CharField(max_length=250, null=True, blank=True)
+    ifsc_code = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return str(self.user.username)
@@ -60,6 +66,7 @@ class UserProfile(models.Model):
             parents.extend(parent.get_all_parents())
         return parents
 
+
 class UserUsage(models.Model):
     userusage = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="usrusage")
     quantity = models.IntegerField(default=0)
@@ -69,6 +76,7 @@ class UserUsage(models.Model):
     
 
 class Payable(models.Model):
+    is_activated = models.BooleanField(default=False, null=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     total_earning = models.FloatField(null=True, default=0.0)
     payable = models.FloatField(null=True, default=0.0)
@@ -77,8 +85,24 @@ class Payable(models.Model):
     def __str__(self):
         return f'{self.user} {self.payable}'
 
+    def joining_date(self):
+        rein = self.user.reinvestment_set.order_by('-date').first()
+        if rein is None:
+            return self.user.user.date_joined
+        else:
+            return rein.date
+
+    def last_date(self):
+        return self.user.user.date_joined + timedelta(days=270)
+
+
 class Holidays(models.Model):
     name = models.CharField(max_length=100, null=True)
     date = models.DateTimeField(auto_now_add=False, null=True)
     type = models.CharField(max_length=70, null=True)
-    
+
+
+class Reinvestment(models.Model):
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    amount = models.FloatField(null=True)

@@ -15,7 +15,12 @@
         </ul>
       </nav><!-- .nav-menu -->
 
+      {% if user.is_authenticated %}
+      <a class="get-started-btn" href="/insite/">Dashboard</a>
+      {% else %}
       <a href="accounts/register/user/" class="get-started-btn">Register</a>
+      <a href="accounts/signin/" class="get-started-btn">Login</a>
+      {% endif %}
 
     </div>
   </header>
