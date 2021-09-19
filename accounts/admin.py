@@ -10,7 +10,7 @@ class UserProfileAdmin(ImportExportModelAdmin):
         'id', 'applicant', 'sodowo','gender','dob','age','pan','joining_amt','district','city','state','pincode','address',
         'sponsor_name','sponsor_mobile', 'user_referral', 'referral_code','receipt_pic', 'referred_by', 'level',
         'user_email', 'username', 'mobile', 'first_name', 'last_name', 'last_login', 'date_joined', 'address',
-        'userstatus', 'login_as_user', 'account_no', 'ifsc_code','account_name','branch_name')
+        'userstatus', 'login_as_user', 'account_no', 'ifsc_code','bank_name','accountholder_name','branch_name')
     list_filter = ('user__date_joined', 'user__last_login', 'userstatus')
     search_fields = ('user__email', 'user__username')
 
@@ -45,7 +45,7 @@ class UserUsageAdmin(admin.ModelAdmin):
 
 class PayableAdmin(ImportExportModelAdmin):
     actions = ['activate_payable']
-    list_display = ('user', 'name', 'joining_date','account_no','ifsc_code','account_name','branch_name', 'joining_amt', 'days', 'payable', 'date', 'last_date',  'is_activated')
+    list_display = ('user', 'name', 'joining_date','account_no','ifsc_code','bank_name','accountholder_name','branch_name', 'joining_amt', 'days', 'payable', 'date', 'last_date',  'is_activated')
     list_filter = ('date', 'payable')
 
     @admin.action(description='Activate Payable')
@@ -65,8 +65,11 @@ class PayableAdmin(ImportExportModelAdmin):
     def ifsc_code(self, obj):
         return obj.user.ifsc_code
     
-    def account_name(self, obj):
-        return obj.user.account_name
+    def accountholder_name(self, obj):
+        return obj.user.accountholder_name
+    
+    def bank_name(self, obj):
+        return obj.user.bank_name
     
     def branch_name(self, obj):
         return obj.user.branch_name

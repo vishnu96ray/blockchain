@@ -45,8 +45,9 @@ class UserProfile(models.Model):
     level = models.CharField(max_length=4, null=True, blank=True)
     account_no = models.CharField(max_length=250, null=True, blank=True)
     ifsc_code = models.CharField(max_length=250, null=True, blank=True)
-    account_name = models.CharField(max_length=250, null=True, blank=True)
+    accountholder_name = models.CharField(max_length=250, null=True, blank=True)
     branch_name = models.CharField(max_length=250, null=True, blank=True)
+    bank_name = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return str(self.user.username)
