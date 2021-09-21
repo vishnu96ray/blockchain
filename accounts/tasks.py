@@ -66,10 +66,10 @@ def calculation():
         revenue_rate = float(final_amount) * (0.75 / 100)
         date_difference = (today - joining_date).days
 
-        if date_difference < 270:
+        if date_difference < 266:
             delta = date_difference
         else:
-            delta = 270
+            delta = 266
 
         for i in range(delta + 1):
             day = joining_date + timedelta(days=i)
@@ -104,7 +104,12 @@ def calculation():
                     children_list.append(t)
 
                     calculated_commission = float(t.joining_amt) * (commission / 100)
-                    total_ref_earning += calculated_commission
+
+                    if int(t.level) - int(user.level) >= 2:
+                        if t.user.date_joined - datetime.now().date() <= timedelta(days=133):
+                            total_ref_earning += calculated_commission
+                    else:
+                        total_ref_earning += calculated_commission
         else:
             total_ref_earning = 0
 
