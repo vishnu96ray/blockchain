@@ -264,7 +264,12 @@ def business(request):
                     children_list.append(t)
 
                     calculated_commission = float(t.joining_amt) * (commission / 100)
-                    total_ref_earning += calculated_commission
+
+                    if int(t.level) - int(user.level) >= 2:
+                        if t.user.date_joined - datetime.now().date() <= timedelta(days=133):
+                            total_ref_earning += calculated_commission
+                    else:
+                        total_ref_earning += calculated_commission
         else:
             total_ref_earning = 0
 
