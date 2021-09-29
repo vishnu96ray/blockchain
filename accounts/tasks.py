@@ -106,7 +106,7 @@ def calculation():
                     calculated_commission = float(t.joining_amt) * (commission / 100)
 
                     if int(t.level) - int(user.level) >= 2:
-                        if t.user.date_joined - datetime.now().date() <= timedelta(days=133):
+                        if t.user.date_joined.date() - datetime.now().date() <= timedelta(days=133):
                             total_ref_earning += calculated_commission
                     else:
                         total_ref_earning += calculated_commission
