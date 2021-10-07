@@ -97,7 +97,7 @@ def calculation():
                 else:
                     commission = 0.05
 
-                if difference <= 10:
+                if difference <= 20:
 
                     children_count += 1
 

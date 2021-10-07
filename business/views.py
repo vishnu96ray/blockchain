@@ -246,7 +246,7 @@ def business(request):
         children = user.get_all_children()
 
         my_difference = int(user.level) - int(current_user.level)
-        if my_difference <= 10:
+        if my_difference <= 20:
             my_childern_list.append(user)
         if len(children) != 1:
             # loop through the first 10 parents
@@ -259,7 +259,7 @@ def business(request):
                 else:
                     commission = 0.05
 
-                if difference <= 10:
+                if difference <= 20:
 
                     children_list.append(t)
 
@@ -300,7 +300,7 @@ def business(request):
         target_user = all_user_for_select.get(id=user_for_ref)
         temp_list = target_user.get_all_children()
         for u in temp_list:
-            if int(u.level) - int(target_user.level) <= 10:
+            if int(u.level) - int(target_user.level) <= 20:
                 target_refs.append(u)
 
     context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
