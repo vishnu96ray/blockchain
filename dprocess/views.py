@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from .models import ContactUs, Country, BusinessType
+from accounts.models import *
 
 def home(request):
     template_name = "index.html"
@@ -40,6 +41,12 @@ def affiliate(request):
     template_name = "static/affiliate.html"
     return render(request, template_name)
 
+
+def holidays(request):
+    ho=Holidays.objects.all()
+    print(ho)
+    template_name = "static/holidays.html"
+    return render(request, template_name,{'ho':ho})
 
 
 # def contactus(request):
