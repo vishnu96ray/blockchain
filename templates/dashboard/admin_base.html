@@ -358,6 +358,8 @@
                   <th>Ref-Id</th>
                   <th>Email</th>
                   <th>Level</th>
+                  <th>joining Date</th>
+
                 </tr></thead>
                 <tbody>
                      {% for u in target_refs %}
@@ -367,6 +369,7 @@
                       <td>{{u.user_referral}}</td>
                       <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{u.user.email}}</td>
                       <td>{{u.level}}</td>
+                      <td>{{u.user.date_joined}}</td>
                     </tr>
                     {% endfor %}
 
