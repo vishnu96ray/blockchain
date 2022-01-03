@@ -222,10 +222,12 @@
                   <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Daily Sales</h4>
+                  <h4 class="card-title">Reinvestment</h4>
                   <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                </div>
+                    {% for re in my_re %}
+                    <span class="text-success">{{ re.amount }} <i class="fa fa-long-arrow-up"></i></span> Your Reinvestment Amount</p>
+                    {% endfor %}
+                  </div>
                 <div class="card-footer">
                   <div class="stats">
                     <i class="material-icons">access_time</i> updated 4 minutes ago
@@ -358,6 +360,8 @@
                   <th>Ref-Id</th>
                   <th>Email</th>
                   <th>Level</th>
+                  <th>joining Date</th>
+
                 </tr></thead>
                 <tbody>
                      {% for u in target_refs %}
@@ -367,6 +371,7 @@
                       <td>{{u.user_referral}}</td>
                       <td><!--<i class="fa fa-envelope-o">&nbsp;</i>-->{{u.user.email}}</td>
                       <td>{{u.level}}</td>
+                      <td>{{u.user.date_joined}}</td>
                     </tr>
                     {% endfor %}
 

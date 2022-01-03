@@ -215,6 +215,7 @@ def business(request):
             rev = diff * (0.75/100) * float(amt)
             left_of_initial_amount = float(amt) - rev
             final_d.append([left_of_initial_amount, (left_of_initial_amount + float(x.amount))])
+    print(final_d)
 
     if len(final_d) != 0:
         amt = final_d[len(final_d)-1][1]
@@ -306,7 +307,7 @@ def business(request):
     context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
                'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': current_user.joining_amt, 'my_revenue_rate': my_revenue_rate,
-               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list, 'all': all_user_for_select, 'target_refs': target_refs}
+               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list, 'all': all_user_for_select, 'target_refs': target_refs, 'my_re':my_re}
     return render(request, 'dashboard/admin_base.html', context)
 
 
