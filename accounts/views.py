@@ -78,7 +78,7 @@ def site_user_registration(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-            return redirect("insite")
+            return redirect("site")
     else:
         template_name = 'accounts/user_register.html'
         return render(request, template_name)
@@ -99,7 +99,7 @@ def login_site(request):
         user = authenticate(username=cus.username, password=password)
         if user:
             login(request, user)
-            return HttpResponseRedirect("/insite/")
+            return HttpResponseRedirect("/site/")
         else:
             return HttpResponseRedirect("/accounts/signin/?msg=Password is not correct.Please fill correct one.")
     else:
@@ -197,7 +197,7 @@ def admin_login(request, username):
     user = User.objects.get(username=username)
     user.backend = 'django.contrib.auth.backends.ModelBackend'
     login(request, user)
-    return HttpResponseRedirect("/insite/")
+    return HttpResponseRedirect("/site/")
 
 
 @login_required(login_url='/')
