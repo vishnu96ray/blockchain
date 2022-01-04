@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^delivery/$', delivery, name="delivery"),
     url(r'^site_mape/$', site_mape, name="site_mape"),
     url(r'^affiliate/$', affiliate, name="affiliate"),
+    url(r'^holidays/$', holidays, name="holidays"),
    
     # url(r'^contactus/$', contactus, name="contactus"),
 

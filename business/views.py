@@ -215,6 +215,7 @@ def business(request):
             rev = diff * (0.75/100) * float(amt)
             left_of_initial_amount = float(amt) - rev
             final_d.append([left_of_initial_amount, (left_of_initial_amount + float(x.amount))])
+    print(final_d)
 
     if len(final_d) != 0:
         amt = final_d[len(final_d)-1][1]
@@ -246,7 +247,7 @@ def business(request):
         children = user.get_all_children()
 
         my_difference = int(user.level) - int(current_user.level)
-        if my_difference <= 10:
+        if my_difference <= 20:
             my_childern_list.append(user)
         if len(children) != 1:
             # loop through the first 10 parents
@@ -259,12 +260,17 @@ def business(request):
                 else:
                     commission = 0.05
 
-                if difference <= 10:
+                if difference <= 20:
 
                     children_list.append(t)
 
                     calculated_commission = float(t.joining_amt) * (commission / 100)
-                    total_ref_earning += calculated_commission
+
+                    if int(t.level) - int(user.level) >= 2:
+                        if t.user.date_joined - datetime.now().date() <= timedelta(days=133):
+                            total_ref_earning += calculated_commission
+                    else:
+                        total_ref_earning += calculated_commission
         else:
             total_ref_earning = 0
 
@@ -295,13 +301,13 @@ def business(request):
         target_user = all_user_for_select.get(id=user_for_ref)
         temp_list = target_user.get_all_children()
         for u in temp_list:
-            if int(u.level) - int(target_user.level) <= 10:
+            if int(u.level) - int(target_user.level) <= 20:
                 target_refs.append(u)
 
     context = {'page': page, 'nexturl': next_url, 'prevurl': prev_url, 'final_data': page.object_list, 'all_users': all_users, 'my_revenue': my_revenue,
                'my_total_ref_earning': my_total_ref_earning, 'last_day_payable': last_day_totals,
                'totals_today': totals_today, 'my_ref_id': referral_id, 'parent_ref_id': parent_ref_id, 'amt': current_user.joining_amt, 'my_revenue_rate': my_revenue_rate,
-               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list, 'all': all_user_for_select, 'target_refs': target_refs}
+               'my_total': my_total, 'my_payable': my_payable, 'my_childern_list': my_childern_list, 'all': all_user_for_select, 'target_refs': target_refs, 'my_re':my_re}
     return render(request, 'dashboard/admin_base.html', context)
 
 
