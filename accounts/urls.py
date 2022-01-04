@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^accounts/signin/$', login_site, name='login'),
     url(r'^accounts/signin/(?P<username>.+)/$', admin_login, name='admin_login'),
     url(r'^accounts/logout/$', auth_logout, name='auth-logout'),
-    url(r'^insite/accounts/usage/$', accounts_usage, name="accounts_usage"),
+    url(r'^site/accounts/usage/$', accounts_usage, name="accounts_usage"),
     # url(r'^insite/api/$', TemplateView.as_view(template_name='myadmin/my_api_credentials.html'), name="api_details"),
     # url(r'^insite/api/(?P<status>.+)/$', api_access, name="api_access"),
     url(r'^accounts/lock_screen/$', lock_screen, name="lock_screen"),

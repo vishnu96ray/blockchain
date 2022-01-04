@@ -39,7 +39,7 @@ $("#userregister").click(function(){
                                    $('.alert-info').addClass('hidden');                                   
                                    $('.form-control').val("");
 				                   setTimeout(function(){
-			                            document.location="/insite/";
+			                            document.location="/site/";
 					                }, 5000);
                                }
                                if (data == 2) {
