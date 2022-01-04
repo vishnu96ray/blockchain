@@ -72,11 +72,16 @@ from .decorators import unapproved_user
 
 def update_holidays(request):
     today = datetime.now().date()
+    last_year = today.year - 1
     holidays_this_year = Holidays.objects.filter(date__date__year=today.year)
+    holidays_last_year = Holidays.objects.filter(date__date__year=last_year)
+    if len(holidays_last_year) != 0:
+        for h in holidays_last_year:
+            h.delete()
 
     if len(holidays_this_year) == 0:
         response = requests.get(
-            f'https://calendarific.com/api/v2/holidays?api_key={settings.CALENDAR_API_KEY}&country=IN&year=2021'
+            f'https://calendarific.com/api/v2/holidays?api_key={settings.CALENDAR_API_KEY}&country=IN&year=2022'
         )
         # print(response.content)
         json_response = json.loads(response.content)
@@ -322,7 +327,7 @@ def reinvest(request):
         if float(re_amount) <= 1000000.0:
             reinvestment = Reinvestment(amount=re_amount, profile=profile)
             reinvestment.save()
-            return redirect('insite')
+            return redirect('site')
         else:
             messages.info(request, 'Reinvestemt Amount Over 10,00,000 Is Not Allowed')
     return render(request, 'accounts/reinvest.html')
